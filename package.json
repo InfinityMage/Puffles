@@ -1,0 +1,20 @@
+{
+  "name": "puffles",
+  "version": "1.0.0",
+  "description": "A Discord bot for The Iceberg guild",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InfinityMage/Puffles.git"
+  },
+  "author": "InfinityMage, 0PTi0NS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InfinityMage/Puffles/issues"
+  },
+  "homepage": "https://github.com/InfinityMage/Puffles#readme"
+}
