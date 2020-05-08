@@ -1,3 +1,24 @@
 {
-    "prefix": "-"
+    "prefix": "-",
+    "color": {
+        "main": "#2F6FFF",
+        "error": "#FF0000"
+    },
+    "misc": {
+        "emoji_numbers": [":one:",":two:",":three:",":four:",":five:"]
+    },
+    "modules": [
+        {
+            "id": ["core", "iceberg"],
+            "friendly": "Core Commands",
+            "description": "The central commands and features of Puffles.",
+            "emoji": ":ice_cube:"
+        },
+        {
+            "id": ["hypixel"],
+            "friendly": "Hypixel",
+            "description": "Commands related to the Hypixel server.",
+            "emoji": "708285501425057895"
+        }
+    ]
 }
