@@ -4,7 +4,8 @@
   "description": "A Discord bot for The Iceberg guild",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {},
   "repository": {
