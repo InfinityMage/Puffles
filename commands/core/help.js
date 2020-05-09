@@ -1,5 +1,6 @@
 const discord = require('discord.js');
 const {complexError} = require('../../util/error.js');
+const {renderEmoji} = require('../../util/text.js');
 
 module.exports = {
 
@@ -28,11 +29,11 @@ module.exports = {
                 let cmd_count = 0;
                 client.commands.map(cmd => {if (mod.id.includes(cmd.module)) cmd_count += 1});
 
-                let emoji = '';
-                if (!isNaN(mod.emoji) && mod.emoji.length === 18) emoji = client.emojis.cache.get(mod.emoji);
-                else emoji = mod.emoji;
+                /*let emoji = '';
+                if (!isNaN(mod.emoji) && mod.emoji.length === 18) emoji = renderEmoji(client, mod.emoji);
+                else emoji = mod.emoji;*/
 
-                help_embed.addField(`${emoji} **${mod.friendly}**`, `\`${client.config.prefix}help ${mod.id[0]}\` **[${cmd_count}]**`)
+                help_embed.addField(`${renderEmoji(client, mod.emoji)} **${mod.friendly}**`, `\`${client.config.prefix}help ${mod.id[0]}\` **[${cmd_count}]**`)
 
             });
 
