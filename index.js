@@ -35,7 +35,3 @@ commandFiles.forEach(cmd => {
 });
 
 client.login(auth.DISCORD_TOKEN);
-
-module.exports = {
-    client: client
-}
