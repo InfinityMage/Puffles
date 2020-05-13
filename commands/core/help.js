@@ -1,6 +1,8 @@
 const discord = require('discord.js');
 const {complexError} = require('../../util/error.js');
 const {renderEmoji} = require('../../util/text.js');
+const Database = require('better-sqlite3');
+const db = new Database('./database.db', { verbose: console.log });
 
 module.exports = {
 
@@ -13,12 +15,15 @@ module.exports = {
 
     async execute (message, args, client) {
 
+        const prefixStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
+        const guildPrefix = await prefixStmt.get(message.guild.id, 'prefix').value;
+
         // default help menu
         if (!args[0]) {
 
             const help_embed = new discord.MessageEmbed()
             .setColor(client.config.color.main)
-            .setDescription(`For more information on a specific command or module, please use \`${client.config.prefix}help [command|module]\``)
+            .setDescription(`For more information on a specific command or module, please use \`${guildPrefix}help [command|module]\``)
             .setThumbnail(client.user.displayAvatarURL())
             .setTitle('**Puffles Help**')
             .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
@@ -29,7 +34,7 @@ module.exports = {
                 let cmd_count = 0;
                 client.commands.map(cmd => {if (mod.id.includes(cmd.module)) cmd_count += 1});
 
-                help_embed.addField(`${renderEmoji(client, mod.emoji)} **${mod.friendly}**`, `\`${client.config.prefix}help ${mod.id[0]}\` **[${cmd_count}]**`)
+                help_embed.addField(`${renderEmoji(mod.emoji, client)} **${mod.friendly}**`, `\`${guildPrefix}help ${mod.id[0]}\` **[${cmd_count}]**`)
 
             });
 
@@ -53,7 +58,7 @@ module.exports = {
                 const module_embed = new discord.MessageEmbed()
                 .setColor(client.config.color.main)
                 .setTitle(`**${query_module.friendly}**`)
-                .setDescription(query_module.description + '\n\n' + `For more information on a command, use \`${client.config.prefix}help [command]\`.`)
+                .setDescription(query_module.description + '\n\n' + `For more information on a command, use \`${guildPrefix}help [command]\`.`)
                 .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
                 .setTimestamp()
 
@@ -65,7 +70,7 @@ module.exports = {
                 let commands = '';
                 cmds.forEach(c => {
                     if (c === null) return;
-                    commands += `\`${client.config.prefix}${c}\`, `;
+                    commands += `\`${guildPrefix}${c}\`, `;
                 });
 
                 if (commands.length > 0) module_embed.addField('**Commands**', commands.slice(0, -2));
@@ -83,15 +88,16 @@ module.exports = {
 
                 const command_embed = new discord.MessageEmbed()
                 .setColor(client.config.color.main)
-                .setTitle(`**${client.config.prefix}${cmd.name}**`)
+                .setTitle(`**${guildPrefix}${cmd.name}**`)
                 .setDescription(cmd.description)
+                .addField('Usage', `\`${guildPrefix}${cmd.usage}\``)
                 .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
                 .setTimestamp()
 
                 if (cmd.examples.length > 0) {
                     let final = '';
                     for (let x = 0; x < cmd.examples.length; x++) {
-                        final += `${client.config.misc.emoji_numbers[x]} ${cmd.examples[x].replace('`', `\`${client.config.prefix}`)}\n`;
+                        final += `${client.config.misc.emoji_numbers[x]} ${cmd.examples[x].replace('`', `\`${guildPrefix}`)}\n`;
                     }
                     command_embed.addField('Examples', final);
                 }
