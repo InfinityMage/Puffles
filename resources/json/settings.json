@@ -1,0 +1,32 @@
+[
+    {
+        "name": "prefix",
+        "default": "-",
+        "type": "String"
+    },
+    {
+        "name": "hypixel_guild_id",
+        "default": null,
+        "type": "Hypixel Guild ID"
+    },
+    {
+        "name": "ticket_category",
+        "default": null,
+        "type": "Discord Channel Category ID"
+    },
+    {
+        "name": "ticket_manager_role",
+        "default": null,
+        "type": "Discord Role ID"
+    },
+    {
+        "name": "hypixel_verified_role",
+        "default": null,
+        "type": "Discord Role ID"
+    },
+    {
+        "name": "hypixel_guild_member_role",
+        "default": null,
+        "type": "Discord Role ID"
+    }
+]
