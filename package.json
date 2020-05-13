@@ -4,7 +4,10 @@
   "description": "A Discord bot for The Iceberg guild",
   "main": "index.js",
   "dependencies": {
+    "better-sqlite3": "^7.0.1",
     "discord.js": "^12.2.0",
+    "limiter": "^1.1.5",
+    "node-cache": "^5.1.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {},
