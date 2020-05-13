@@ -1,5 +1,6 @@
 {
-    "prefix": "-",
+    "guild_id": "5e1550f38ea8c92086b1251a",
+    "cache_time": 7200,
     "color": {
         "main": "#2F6FFF",
         "error": "#FF0000"

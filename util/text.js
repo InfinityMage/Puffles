@@ -6,7 +6,7 @@ module.exports = {
         return words.join(' ');
     },
 
-    renderEmoji: (client, em) => {
+    renderEmoji: (em, client) => {
         if(!isNaN(em) && em.length === 18) return client.emojis.cache.get(em);
         else return em;
     }

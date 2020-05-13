@@ -105,3 +105,6 @@ dist
 
 # authentication file
 auth.json
+
+# local database
+*.db
