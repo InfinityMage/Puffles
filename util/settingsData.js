@@ -5,7 +5,7 @@ module.exports = {
     getSetting: (name) => {
         let defaultval;
         settings.forEach(s => {
-            if (s.name === name) defaultval = s.default;
+            if (s.name === name) defaultval = s;
         });
         return defaultval;
     }
