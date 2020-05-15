@@ -1,6 +1,5 @@
 const discord = require('discord.js');
-const fetch = require('node-fetch');
-const auth = require('../../auth.json');
+const { customHypixelReq } = require('../../util/hypixelAPI.js')
 
 module.exports = {
 
@@ -11,7 +10,7 @@ module.exports = {
     aliases: [],
     examples: [],
 
-    execute (message, args, client) {
+    async execute (message, args, client) {
 
         const countEmbed = new discord.MessageEmbed()
         .setColor(client.config.color.main)
@@ -19,12 +18,10 @@ module.exports = {
         .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
         .setTimestamp()
 
-        fetch('https://api.hypixel.net/gameCounts?key='+auth.HYPIXEL_API_KEY)
-        .then(res => res.json())
-        .then(json => {
-            countEmbed.setDescription(`**Total Online Players:** ${json.playerCount}\n\n**SkyBlock Players:** ${json.games.SKYBLOCK.players}\n**BedWars Players:** ${json.games.BEDWARS.players}\n**SkyWars Players:** ${json.games.SKYWARS.players}`);
-            message.channel.send(countEmbed);
-        });
+        const counts = await customHypixelReq('gameCounts?key=')
+
+        countEmbed.setDescription(`**Total Online Players:** ${counts.playerCount}\n\n**SkyBlock Players:** ${counts.games.SKYBLOCK.players}\n**BedWars Players:** ${counts.games.BEDWARS.players}\n**SkyWars Players:** ${counts.games.SKYWARS.players}`);
+        return message.channel.send(countEmbed);
 
     }
 
