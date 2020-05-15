@@ -1,5 +1,5 @@
 const Database = require('better-sqlite3');
-const db = new Database('./database.db', { verbose: console.log });
+const db = new Database('./database.db');
 
 module.exports = async (client) => {
 
@@ -7,7 +7,7 @@ module.exports = async (client) => {
 
     client.user.setActivity('with Penguins', {type: 'PLAYING'});
 
-    const settingsStmt = db.prepare('CREATE TABLE IF NOT EXISTS settings (guild TEXT, setting TEXT, value TEXT)');
+    const settingsStmt = db.prepare('CREATE TABLE IF NOT EXISTS settings (guild TEXT, setting TEXT, value TEXT, friendly_value TEXT)');
     settingsStmt.run();
 
 };

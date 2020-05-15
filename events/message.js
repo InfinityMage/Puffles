@@ -1,6 +1,6 @@
 const discord = require('discord.js')
 const Database = require('better-sqlite3');
-const db = new Database('./database.db', { verbose: console.log });
+const db = new Database('./database.db');
 const settings = require('../resources/json/settings.json');
 const { getSetting } = require('../util/settingsData.js');
 
@@ -16,8 +16,9 @@ module.exports = async (client, message) => {
     guildPrefix = await prefixStmt.get(message.guild.id, 'prefix');
 
     if(!guildPrefix) {
-        const setupPrefix = await db.prepare(`INSERT INTO settings (guild, setting, value) VALUES (?, ?, ?)`);
-        guildPrefix = await setupPrefix.run(message.guild.id, 'prefix', getSetting('prefix'));
+        const setupPrefix = await db.prepare(`INSERT INTO settings (guild, setting, value, friendly_value) VALUES (?, ?, ?, ?)`);
+        const defaultprefix = getSetting('prefix').default;
+        guildPrefix = await setupPrefix.run(message.guild.id, 'prefix', defaultprefix, defaultprefix);
         guildPrefix = await prefixStmt.get(message.guild.id, 'prefix');
     }
 
