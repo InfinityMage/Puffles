@@ -2,31 +2,38 @@
     {
         "name": "prefix",
         "default": "-",
-        "type": "String"
+        "type": "String",
+        "max_length": 5,
+        "description": "The bot's prefix for commands"
     },
     {
-        "name": "hypixel_guild_id",
-        "default": null,
-        "type": "Hypixel Guild ID"
+        "name": "hypixel_guild",
+        "default": "",
+        "type": "Hypixel Guild ID",
+        "description": "The ID of the Hypixel Guild you want the bot to get data for"
     },
     {
         "name": "ticket_category",
-        "default": null,
-        "type": "Discord Channel Category ID"
+        "default": "",
+        "type": "Discord Channel Category ID",
+        "description": "The Discord channel category you want any new ticket channels to be added to"
     },
     {
         "name": "ticket_manager_role",
-        "default": null,
-        "type": "Discord Role ID"
+        "default": "",
+        "type": "Discord Role ID",
+        "description": "The Discord role you want to be automatically added to tickets"
     },
     {
-        "name": "hypixel_verified_role",
-        "default": null,
-        "type": "Discord Role ID"
+        "name": "verified_mc_role",
+        "default": "",
+        "type": "Discord Role ID",
+        "description": "The Discord role you want anyone with a verified Minecraft account to have"
     },
     {
-        "name": "hypixel_guild_member_role",
-        "default": null,
-        "type": "Discord Role ID"
+        "name": "guild_member_role",
+        "default": "",
+        "type": "Discord Role ID",
+        "description": "The Discord role you want anyone who is a member of the Hypixel guild to have"
     }
 ]
