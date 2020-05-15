@@ -2,7 +2,7 @@ const discord = require('discord.js');
 const {complexError} = require('../../util/error.js');
 const {renderEmoji} = require('../../util/text.js');
 const Database = require('better-sqlite3');
-const db = new Database('./database.db', { verbose: console.log });
+const db = new Database('./database.db');
 
 module.exports = {
 
