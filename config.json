@@ -3,7 +3,8 @@
     "cache_time": 7200,
     "color": {
         "main": "#2F6FFF",
-        "error": "#FF0000"
+        "error": "#FF0000",
+        "success": "#32CD32"
     },
     "misc": {
         "emoji_numbers": [":one:",":two:",":three:",":four:",":five:"]
