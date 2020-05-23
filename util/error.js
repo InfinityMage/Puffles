@@ -9,7 +9,7 @@ module.exports = {
 
     complexError: (msg) => {
         const errorEmbed = new discord.MessageEmbed()
-        .setTitle(`Error`)
+        .setTitle(`🧊 Iceberg Error`)
         .setColor(config.color.error)
         .setDescription(msg)
 
