@@ -1,8 +1,8 @@
 const discord = require('discord.js');
 const Database = require('better-sqlite3');
 const db = new Database('././database.db');
-const { getGuild, getPlayer } = require('../../util/hypixelAPI.js');
-const { getRole } = require('../../util/discordObjects.js');
+const { getGuild, getPlayer, getPlayerByUUID } = require('../../util/hypixelAPI.js');
+const { getRole, getMember } = require('../../util/discordObjects.js');
 const { complexError } = require('../../util/error.js');
 
 module.exports = {
@@ -12,14 +12,31 @@ module.exports = {
     description: 'Verify your Minecraft account with your Discord account, as well as your guild membership.',
     module: 'hypixel',
     admin: false,
+    dev: false,
     aliases: ['link'],
     examples: ['`verify InfinityMage` : link your discord account with the Minecraft account `InfinityMage`'],
 
     async execute (message, args, client) {
 
-        const msg = await message.channel.send('`Attempting verification...`');
+        let discordMember;
+        let pronounyThing = 'Your';
+
+        // If the command user is an admin (used for manual verifications of other players)
+        if (message.member.hasPermission('MANAGE_GUILD') || client.config.bot_admins.includes(message.author.id)) {
+            if (args[1]) {
+                if (await getMember(message.guild, args[1])) {
+                    discordMember = await getMember(message.guild, args[1])
+                    pronounyThing = `<@${discordMember.id}>'s`;
+                } else return message.channel.send(complexError(`Invalid user.`));
+            } else discordMember = message.member;
+        } else discordMember = message.member;
+        
+        const attemptingEmbed = new discord.MessageEmbed()
+        .setColor(client.config.color.main)
+        .setDescription(`➤ Attempting to link \`${discordMember.user.tag}\` to \`${args[0]}\`...`)
+        const msg = await message.channel.send(attemptingEmbed);
         const settingsStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
-        const getlinkStmt = await db.prepare(`SELECT user FROM mc_linkings WHERE guild = ? AND user = ? AND minecraftuuid = ?`);
+        const getlinkStmt = await db.prepare(`SELECT minecraftuuid FROM mc_linkings WHERE guild = ? AND user = ?`);
 
         if (!args[0]) {
             const guildPrefix = await settingsStmt.get(message.guild.id, 'prefix').value;
@@ -33,25 +50,29 @@ module.exports = {
             if (!player_data) return msg.edit('', {embed: complexError(`An unexpected error occurred.`)});
             if (player_data.player === null) return msg.edit('', {embed: complexError(`Invalid player! Please input a valid Minecraft username.`)});
 
-            if (!player_data.player.socialMedia.links.DISCORD || player_data.player.socialMedia.links.DISCORD !== message.author.tag) return msg.edit('', {embed: complexError(`Please make sure that your ingame Discord social media matches your Discord tag! This is available through the ingame profile menu.`)});
+            if (!player_data.player.socialMedia || !player_data.player.socialMedia.links.DISCORD || player_data.player.socialMedia.links.DISCORD !== discordMember.user.tag) return msg.edit('', {embed: complexError(`Please make sure that your ingame Discord social media matches your Discord tag! This is available through the ingame profile menu.`)});
 
             let mc_uuid = player_data.player.uuid;
 
-            const getLinkage = await getlinkStmt.get(message.guild.id, message.author.id, mc_uuid);
-            if (getLinkage) msg.edit('', {embed: complexError(`Your account has already been linked to \`${player_data.player.displayname}\`!`)});
-            if(!message.member.roles.cache.get(verifiedRoleID) && getLinkage) return message.member.roles.add(verifiedRoleID);
-            else if (message.member.roles.cache.get(verifiedRoleID) && getLinkage) return;
+            const getLinkage = await getlinkStmt.get(message.guild.id, discordMember.id);
+            if (getLinkage) {
+                const getPreviousLink = await getPlayerByUUID(getLinkage.minecraftuuid, client.cache);
+                if (!getPreviousLink.player) msg.edit('', {embed: complexError(`${pronounyThing} account has already been linked to \`Error: Invalid Account\`!`)});
+                else msg.edit('', {embed: complexError(`${pronounyThing} account has already been linked to \`${getPreviousLink.player.displayname}\`!`)});
+            }
+            if(!discordMember.roles.cache.get(verifiedRoleID) && getLinkage) return discordMember.roles.add(verifiedRoleID);
+            else if (discordMember.roles.cache.get(verifiedRoleID) && getLinkage) return;
             
             if (!getLinkage) {
                 const insertVerifStmt = await db.prepare(`INSERT INTO mc_linkings (guild, user, minecraftuuid) VALUES (?, ?, ?)`);
-                insertVerifStmt.run(message.guild.id, message.author.id, mc_uuid);
-                message.member.roles.add(verifiedRoleID);
+                insertVerifStmt.run(message.guild.id, discordMember.id, mc_uuid);
+                discordMember.roles.add(verifiedRoleID);
             }
 
             const successEmbed = new discord.MessageEmbed()
             .setColor(client.config.color.success)
             .setTitle(`Verified Minecraft Account`)
-            .setDescription(`:white_check_mark: Your Discord has been linked to the Minecraft account \`${player_data.player.displayname}\`.`)
+            .setDescription(`:white_check_mark: ${pronounyThing} Discord has been linked to the Minecraft account \`${player_data.player.displayname}\`.`)
 
             msg.edit('', {embed: successEmbed});
 
