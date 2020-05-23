@@ -10,6 +10,8 @@ module.exports = {
     usage: 'help [command|module]',
     description: 'View command modules or get help on a specific command.',
     module: 'core',
+    admin: false,
+    dev: false,
     aliases: ['h', 'commands', 'modules'],
     examples: ['`help` : gives a list of modules', '`help ping` : displays information and usage on the ping command'],
 

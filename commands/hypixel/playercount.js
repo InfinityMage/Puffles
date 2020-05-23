@@ -7,6 +7,8 @@ module.exports = {
     usage: 'playercount',
     description: 'Show the current number of online players on Hypixel.',
     module: 'hypixel',
+    admin: false,
+    dev: false,
     aliases: [],
     examples: [],
 

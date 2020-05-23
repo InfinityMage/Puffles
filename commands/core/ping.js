@@ -6,6 +6,8 @@ module.exports = {
     usage: 'ping',
     description: 'Display Puffles\'s response time and the connection latency to Discord\'s API.',
     module: 'core',
+    admin: false,
+    dev: false,
     aliases: [],
     examples: [],
 
