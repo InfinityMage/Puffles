@@ -33,7 +33,7 @@ module.exports = {
         
         const attemptingEmbed = new discord.MessageEmbed()
         .setColor(client.config.color.main)
-        .setDescription(`➤ Attempting to link \`${discordMember.user.tag}\` to \`${args[0]}\`...`)
+        .setDescription(`⚙️ Verification ➤ \`${discordMember.user.tag}\` to \`${args[0]}\``)
         const msg = await message.channel.send(attemptingEmbed);
         const settingsStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
         const getlinkStmt = await db.prepare(`SELECT minecraftuuid FROM mc_linkings WHERE guild = ? AND user = ?`);
