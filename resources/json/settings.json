@@ -35,5 +35,11 @@
         "default": "",
         "type": "Discord Role ID",
         "description": "The Discord role you want anyone who is a member of the Hypixel guild to have"
+    },
+    {
+        "name": "non_guild_member_role",
+        "default": "",
+        "type": "Discord Role ID",
+        "description": "The Discord role you want anyone who is not a member of the Hypixel guild to have"
     }
 ]
