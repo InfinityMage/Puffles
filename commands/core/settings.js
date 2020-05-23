@@ -14,6 +14,7 @@ module.exports = {
     description: 'View or change the bot\'s settings. Using `set` with no entered value will reset the setting to its default value.',
     module: 'core',
     admin: true,
+    dev: false,
     aliases: ['config', 'options'],
     examples: ['`settings set prefix ;;` : sets the bot\'s prefix to `;;`', '`settings get ticket_manager_role` : will return whatever role is currently managing tickets', '`settings list` : get a list of all the available settings you can change'],
 
@@ -57,7 +58,7 @@ module.exports = {
             let friendlyinput;
 
             if(settingMeta.type === "Discord Role ID") {
-                const attemptRole = getRole(message.guild, args[2]);
+                const attemptRole = await getRole(message.guild, args[2]);
                 if (!attemptRole) return message.channel.send(complexError(`That is an invalid discord role! Please make sure to either ping the role or send the role ID.`));
                 rawinput = attemptRole.id;
                 friendlyinput = `<@&${attemptRole.id}>`;
