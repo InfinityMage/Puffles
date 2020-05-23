@@ -44,7 +44,7 @@ module.exports = {
         } else {
 
             let verifiedRoleID = await settingsStmt.get(message.guild.id, 'verified_mc_role');
-            if (!verifiedRoleID || !getRole(message.guild, verifiedRoleID.value)) return message.channel.send(complexError(`There is no verified role. Please contact this Discord's administrators.`));
+            if (!verifiedRoleID || !getRole(message.guild, verifiedRoleID.value)) return msg.edit('', {embed: complexError(`There is no verified role. Please contact this Discord's administrators.`)});
 
             const player_data = await getPlayer(args[0], client.cache, true);
             if (!player_data) return msg.edit('', {embed: complexError(`An unexpected error occurred.`)});
