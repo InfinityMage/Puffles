@@ -1,6 +1,7 @@
 {
-    "guild_id": "5e1550f38ea8c92086b1251a",
     "cache_time": 7200,
+    "dev_servers": ["707461990355959808"],
+    "bot_admins": ["338451013432377355e"],
     "color": {
         "main": "#2F6FFF",
         "error": "#FF0000",
