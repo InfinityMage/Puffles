@@ -43,8 +43,8 @@ module.exports = {
             return msg.edit('', {embed: complexError(`Invalid usage! Please use \`${guildPrefix}${this.usage}\``)});
         } else {
 
-            let verifiedRoleID = await settingsStmt.get(message.guild.id, 'verified_mc_role').value;
-            if (!verifiedRoleID || !getRole(message.guild, verifiedRoleID)) return message.channel.send(complexError(`There is no verified role. Please contact this Discord's administrators.`));
+            let verifiedRoleID = await settingsStmt.get(message.guild.id, 'verified_mc_role');
+            if (!verifiedRoleID || !getRole(message.guild, verifiedRoleID.value)) return message.channel.send(complexError(`There is no verified role. Please contact this Discord's administrators.`));
 
             const player_data = await getPlayer(args[0], client.cache, true);
             if (!player_data) return msg.edit('', {embed: complexError(`An unexpected error occurred.`)});
@@ -60,13 +60,13 @@ module.exports = {
                 if (!getPreviousLink.player) msg.edit('', {embed: complexError(`${pronounyThing} account has already been linked to \`Error: Invalid Account\`!`)});
                 else msg.edit('', {embed: complexError(`${pronounyThing} account has already been linked to \`${getPreviousLink.player.displayname}\`!`)});
             }
-            if(!discordMember.roles.cache.get(verifiedRoleID) && getLinkage) return discordMember.roles.add(verifiedRoleID);
-            else if (discordMember.roles.cache.get(verifiedRoleID) && getLinkage) return;
+            if(!discordMember.roles.cache.get(verifiedRoleID.value) && getLinkage) return discordMember.roles.add(verifiedRoleID.value);
+            else if (discordMember.roles.cache.get(verifiedRoleID.value) && getLinkage) return;
             
             if (!getLinkage) {
                 const insertVerifStmt = await db.prepare(`INSERT INTO mc_linkings (guild, user, minecraftuuid) VALUES (?, ?, ?)`);
                 insertVerifStmt.run(message.guild.id, discordMember.id, mc_uuid);
-                discordMember.roles.add(verifiedRoleID);
+                discordMember.roles.add(verifiedRoleID.value);
             }
 
             const successEmbed = new discord.MessageEmbed()

@@ -8,6 +8,7 @@ module.exports = {
     run: async (guild, client) => {
         const settingsStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
         const guildID = await settingsStmt.get(guild.id, 'hypixel_guild');
+        if (!guildID) return;
 
         let hypixel_members = await getGuild(guildID.value, client.cache, true);
         if (!hypixel_members || !hypixel_members.guild.members) return console.log('An error occured [GUILD_MEMBER_LINKER_NO_GUILD_DATA]')
