@@ -3,6 +3,7 @@ const Database = require('better-sqlite3');
 const db = new Database('./database.db');
 const settings = require('../resources/json/settings.json');
 const { getSetting } = require('../util/settingsData.js');
+const { simpleError } = require('../util/error.js');
 
 module.exports = async (client, message) => {
 
@@ -34,7 +35,10 @@ module.exports = async (client, message) => {
     const args = message.content.toLowerCase().slice(casePrefix.length).trim().split(/ +/g);
     const commandName = args.shift();
     const cmd = client.commands.get(commandName) || client.commands.find(c => c.aliases && c.aliases.includes(commandName));
-    if(!cmd) return;
+    if (!cmd) return;
+
+    if (cmd.dev && !client.config.dev_servers.includes(message.guild.id)) return simpleError(message);
+    if (cmd.admin && !message.member.hasPermission('MANAGE_GUILD') && !client.config.bot_admins.includes(message.author.id)) return simpleError(message);
 
     cmd.execute(message, args, client);
 
