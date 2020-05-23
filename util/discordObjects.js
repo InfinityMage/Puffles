@@ -1,19 +1,24 @@
 module.exports = {
 
-    getRole: (guild, input) => {
+    getRole: async (guild, input) => {
 
-        if (guild.roles.cache.get(input)) return guild.roles.cache.get(input);
-
+        if (input.length === 18 && await guild.roles.fetch(input)) return await guild.roles.fetch(input);
+        
         const matches = input.match(/^<@&(\d+)>$/);
         if (!matches) return;
 
-        return guild.roles.cache.get(matches[1]);
+        return await guild.roles.fetch(matches[1]);
 
     },
 
-    getMember: (client, guild, input) => {
+    getMember: async (guild, input) => {
         
-        
+        if (input.length === 18 && await guild.members.fetch(input)) return await guild.members.fetch(input);
+
+        const matches = input.match(/^<@!?(\d+)>$/);
+        if (!matches) return;
+
+        return await guild.members.fetch(matches[1]);
 
     }
 

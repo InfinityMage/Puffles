@@ -12,6 +12,7 @@ module.exports = {
     },
 
     // denyCacheRetrieve is a boolean option about whether or not to retrieve the data from the cache, or get it fresh from the API
+
     getGuild: async (guild_id, cache, denyCacheRetrieve) => {
 
         let guild_data;
@@ -47,6 +48,24 @@ module.exports = {
 
         return player_data;
 
-    }
+    },
+
+    getPlayerByUUID: async (player_uuid, cache, denyCacheRetrieve) => {
+
+        let player_data;
+
+        if (cache.has('HYPIXEL_PLAYER_'+player_uuid) && !denyCacheRetrieve) player_data = cache.get('HYPIXEL_GUILD_'+player_uuid);
+        else {
+            await fetch('https://api.hypixel.net/player?uuid='+player_uuid+'&key='+auth.HYPIXEL_API_KEY).then(res => res.json()).then(json => {player_data = json;});
+            if (player_data.success) cache.set('HYPIXEL_GUILD_'+player_uuid, player_data);
+        }
+        // failed to get data from API
+        if (!player_data.success && player_data.cause === 'Malformed guild ID') return 'bad_id';
+
+        if (!player_data.success) return;
+
+        return player_data;
+
+    } 
 
 }
