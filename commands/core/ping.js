@@ -15,7 +15,7 @@ module.exports = {
 
         const progressEmbed = new discord.MessageEmbed()
         .setColor(client.config.color.main)
-        .setDescription(`⚙️ Pinging » In progress..`)
+        .setDescription(`⚙️ Pinging » In progress...`)
         const msg = await message.channel.send(progressEmbed);
 
         const pingEmbed = new discord.MessageEmbed()
