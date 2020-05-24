@@ -43,7 +43,7 @@ module.exports = async (client, message) => {
     if (cmd.dev && !client.config.dev_servers.includes(message.guild.id)) return simpleError(message);
     if (cmd.admin && !message.member.hasPermission('MANAGE_GUILD') && !client.config.bot_admins.includes(message.author.id)) return simpleError(message);
 
-    if (message.channel.id === verification_channel.value && cmd.name !== 'verify') return simpleError(message);
+    if (verification_channel && message.channel.id === verification_channel.value && cmd.name !== 'verify') return simpleError(message);
 
     cmd.execute(message, args, client);
 
