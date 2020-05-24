@@ -14,7 +14,9 @@ module.exports = async (client, message) => {
     const settingsStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
     const verification_channel = await settingsStmt.get(message.guild.id, 'verification_channel');
 
-    if (verification_channel && message.channel.id === verification_channel.value) message.delete({timeout: 6000});
+    setTimeout(() => {
+        if (verification_channel && message.channel.id === verification_channel.value && !message.pinned) message.delete();
+    }, 6000)
 
     let guildPrefix;
     guildPrefix = await settingsStmt.get(message.guild.id, 'prefix');
