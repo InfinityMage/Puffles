@@ -16,13 +16,13 @@ module.exports = {
 
         const countEmbed = new discord.MessageEmbed()
         .setColor(client.config.color.main)
-        .setTitle('Players via Hypixel Network!')
+        .setTitle('Players | HYPIXEL NETWORK')
         .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
         .setTimestamp()
 
         const counts = await customHypixelReq('gameCounts?key=')
 
-        countEmbed.setDescription(`» **Total Online Players:** ${counts.playerCount}\n━━━━━━━━━━\n» **SkyBlock Players:** ${counts.games.SKYBLOCK.players}\n» **BedWars Players:** ${counts.games.BEDWARS.players}\n» **SkyWars Players:** ${counts.games.SKYWARS.players}`);
+        countEmbed.setDescription(`» **Total Online Players:** ${counts.playerCount}\n━━━━━━━━━━━━━━━\n» **SkyBlock Players:** ${counts.games.SKYBLOCK.players}\n» **BedWars Players:** ${counts.games.BEDWARS.players}\n» **SkyWars Players:** ${counts.games.SKYWARS.players}`);
         return message.channel.send(countEmbed);
 
     }
