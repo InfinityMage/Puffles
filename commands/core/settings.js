@@ -3,7 +3,7 @@ const Database = require('better-sqlite3');
 const db = new Database('././database.db');
 const { complexError } = require('../../util/error');
 const { getSetting } = require('../../util/settingsData.js');
-const { getRole } = require('../../util/discordObjects.js')
+const { getRole, getChannel } = require('../../util/discordObjects.js')
 const { getGuild } = require('../../util/hypixelAPI.js')
 const settings = require('../../resources/json/settings.json');
 
@@ -62,6 +62,14 @@ module.exports = {
                 if (!attemptRole) return message.channel.send(complexError(`That is an invalid discord role! Please make sure to either ping the role or send the role ID.`));
                 rawinput = attemptRole.id;
                 friendlyinput = `<@&${attemptRole.id}>`;
+            }
+
+            else if(settingMeta.type === "Discord Channel ID") {
+                const attemptChannel = await getChannel(client, args[2]);
+                if (!attemptChannel) return message.channel.send(complexError(`That is an invalid discord channel! Please make sure to either tag the channel or send the channel ID.`));
+                if (attemptChannel.type !== 'text' || attemptChannel.guild.id !== message.guild.id) return message.channel.send(complexError(`That is an invalid discord channel! Please make sure to either tag the channel or send the channel ID.`));
+                rawinput = attemptChannel.id;
+                friendlyinput = `<#${attemptChannel.id}>`;
             }
 
             else if (settingMeta.name === "prefix") {

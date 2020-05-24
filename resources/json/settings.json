@@ -41,5 +41,11 @@
         "default": "",
         "type": "Discord Role ID",
         "description": "The Discord role you want anyone who is not a member of the Hypixel guild to have"
+    },
+    {
+        "name": "verification_channel",
+        "default": "",
+        "type": "Discord Channel ID",
+        "description": "The Discord channel you want verification to occur. NOTE: any messages sent after this is set will be deleted automatically."
     }
 ]

@@ -20,6 +20,10 @@ module.exports = {
 
         let discordMember;
         let pronounyThing = 'Your';
+        let invalid_msg;
+
+        const settingsStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
+        const verification_channel = await settingsStmt.get(message.guild.id, 'verification_channel');
 
         // If the command user is an admin (used for manual verifications of other players)
         if (message.member.hasPermission('MANAGE_GUILD') || client.config.bot_admins.includes(message.author.id)) {
@@ -27,15 +31,18 @@ module.exports = {
                 if (await getMember(message.guild, args[1])) {
                     discordMember = await getMember(message.guild, args[1])
                     pronounyThing = `<@${discordMember.id}>'s`;
-                } else return message.channel.send(complexError(`Invalid user.`));
+                } else invalid_msg = await message.channel.send(complexError(`Invalid user.`));
             } else discordMember = message.member;
         } else discordMember = message.member;
         
+        if (invalid_msg && message.channel.id === verification_channel.value) return invalid_msg.delete({timeout: 6000})
+        else if (invalid_msg) return;
+
         const attemptingEmbed = new discord.MessageEmbed()
         .setColor(client.config.color.main)
         .setDescription(`⚙️ Verification » \`${discordMember.user.tag}\` to \`${args[0]}\``)
         const msg = await message.channel.send(attemptingEmbed);
-        const settingsStmt = await db.prepare(`SELECT value FROM settings WHERE guild = ? AND setting = ?`);
+        if (message.channel.id === verification_channel.value) msg.delete({timeout: 6000})
         const getlinkStmt = await db.prepare(`SELECT minecraftuuid FROM mc_linkings WHERE guild = ? AND user = ?`);
 
         if (!args[0]) {
