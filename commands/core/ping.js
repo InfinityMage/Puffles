@@ -13,7 +13,10 @@ module.exports = {
 
     async execute (message, args, client) {
 
-        const msg = await message.channel.send('`Pinging...`');
+        const progressEmbed = new discord.MessageEmbed()
+        .setColor(client.config.color.main)
+        .setDescription(`⚙️ Pinging » In progress...`)
+        const msg = await message.channel.send(progressEmbed);
 
         const pingEmbed = new discord.MessageEmbed()
         .setColor(client.config.color.main)
