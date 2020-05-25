@@ -16,7 +16,7 @@ module.exports = {
     admin: true,
     dev: false,
     aliases: ['config', 'options'],
-    examples: ['`settings set prefix ;;` : sets the bot\'s prefix to `;;`', '`settings get ticket_manager_role` : will return whatever role is currently managing tickets', '`settings list` : get a list of all the available settings you can change'],
+    examples: ['`settings set prefix /` : sets the bot\'s prefix to `/`', '`settings get ticket_manager_role` : will return whatever role is currently managing tickets', '`settings list` : get a list of all the available settings you can change'],
 
     async execute (message, args, client) {
 
