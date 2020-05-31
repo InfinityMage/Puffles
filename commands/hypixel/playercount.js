@@ -22,7 +22,7 @@ module.exports = {
 
         const counts = await customHypixelReq('gameCounts?key=')
 
-        countEmbed.setDescription(`» **Total Online Players:** ${counts.playerCount}\n━━━━━━━━━━━━━━━\n» **SkyBlock Players:** ${counts.games.SKYBLOCK.players}\n» **BedWars Players:** ${counts.games.BEDWARS.players}\n» **SkyWars Players:** ${counts.games.SKYWARS.players}`);
+        countEmbed.setDescription(`» **Total Online Players:** ${counts.playerCount}\n━━━━━━━━━━━━━\n» **SkyBlock Players:** ${counts.games.SKYBLOCK.players}\n» **BedWars Players:** ${counts.games.BEDWARS.players}\n» **SkyWars Players:** ${counts.games.SKYWARS.players}`);
         return message.channel.send(countEmbed);
 
     }

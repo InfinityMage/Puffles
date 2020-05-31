@@ -36,7 +36,7 @@ module.exports = {
                 let cmd_count = 0;
                 client.commands.map(cmd => {if (mod.id.includes(cmd.module)) cmd_count += 1});
 
-                help_embed.addField(`${renderEmoji(mod.emoji, client)} **${mod.friendly}**`, `\`${guildPrefix}help ${mod.id[0]}\` **[${cmd_count}]**`)
+                help_embed.addField(`${renderEmoji(mod.emoji, client)} **${mod.friendly}**`, `\`${guildPrefix}help ${mod.id[0]}\` **[${cmd_count} commands]**`)
 
             });
 

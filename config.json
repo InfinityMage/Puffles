@@ -13,13 +13,13 @@
     "modules": [
         {
             "id": ["core", "iceberg"],
-            "friendly": "Core Commands",
+            "friendly": "Core Systems",
             "description": "The central commands and features of Puffles.",
-            "emoji": ":ice_cube:"
+            "emoji": "714334866128240690"
         },
         {
             "id": ["hypixel"],
-            "friendly": "Hypixel",
+            "friendly": "Hypixel Tools",
             "description": "Commands related to the Hypixel server.",
             "emoji": "708285501425057895"
         }
