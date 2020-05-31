@@ -8,7 +8,7 @@
         "success": "#32CD32"
     },
     "misc": {
-        "emoji_numbers": [":one:",":two:",":three:",":four:",":five:"]
+        "emoji_numbers": [":one:", ":two:", ":three:", ":four:", ":five:"]
     },
     "modules": [
         {
@@ -21,6 +21,12 @@
             "id": ["hypixel"],
             "friendly": "Hypixel Tools",
             "description": "Commands related to the Hypixel server.",
+            "emoji": "708285501425057895"
+        },
+        {
+            "id": ["random"],
+            "friendly": "Fun commands",
+            "description": "Some random commands just for fun.",
             "emoji": "708285501425057895"
         }
     ]
