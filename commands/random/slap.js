@@ -1,5 +1,6 @@
 const discord = require("discord.js");
 const fetch = require("node-fetch");
+const { complexError } = require("../../util/error");
 
 module.exports = {
     name: "slap",
