@@ -6,7 +6,7 @@ const db = new Database("././database.db");
 
 module.exports = {
     name: "pat",
-    usage: "pat @someone",
+    usage: "pat <user>",
     description: "Pat someone.",
     module: "random",
     admin: false,
@@ -27,7 +27,7 @@ module.exports = {
                 .value;
             await message.channel.send(
                 complexError(
-                    `Invalid usage! Please use ${guildPrefix}${this.usage}`
+                    `Invalid usage! Please use \`${guildPrefix}${this.usage}\``
                 )
             );
             return;
