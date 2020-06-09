@@ -6,14 +6,14 @@ const db = new Database("././database.db");
 const { getMember } = require("../../util/discordObjects");
 
 module.exports = {
-    name: "slap",
-    usage: "slap <user>",
-    description: "Slap someone.",
+    name: "pat",
+    usage: "pat <user>",
+    description: "Pat someone.",
     module: "random",
     admin: false,
     dev: false,
     aliases: [],
-    examples: ["slap @Vert3xo#2666"],
+    examples: ["pat @Vert3xo#2666"],
 
     async execute(message, args, client) {
         if (
@@ -21,7 +21,7 @@ module.exports = {
             args[0] === `<@!${message.author.id}>`
         ) {
             await message.channel.send(
-                complexError("You can not slap yourself.")
+                complexError("You can not pat yourself.")
             );
             return;
         }
@@ -42,15 +42,12 @@ module.exports = {
             );
             return;
         }
-        const url = fetch("https://neko-love.xyz/api/v1/slap")
+        const url = fetch("https://neko-love.xyz/api/v1/pat")
             .then((res) => res.json())
             .then((json) => json.url);
         const progressEmbed = new discord.MessageEmbed()
             .setColor(client.config.color.main)
-            .addField(
-                "**✋ Slap**",
-                `${message.author.username} slapped ${args[0]}`
-            )
+            .addField("**Pat**", `${message.author.username} patted ${args[0]}`)
             .setImage(await url);
         await message.channel.send(progressEmbed);
     },

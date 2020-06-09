@@ -15,7 +15,7 @@
             "id": ["core", "iceberg"],
             "friendly": "Core Systems",
             "description": "The central commands and features of Puffles.",
-            "emoji": "714334866128240690"
+            "emoji": "718801374573363200"
         },
         {
             "id": ["hypixel"],
@@ -27,7 +27,7 @@
             "id": ["random"],
             "friendly": "Fun commands",
             "description": "Some random commands just for fun.",
-            "emoji": "666487922119147530"
+            "emoji": "😂"
         }
     ]
 }
