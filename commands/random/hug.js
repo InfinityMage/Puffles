@@ -13,7 +13,7 @@ module.exports = {
     admin: false,
     dev: false,
     aliases: [],
-    examples: ["hug @Vert3xo#2666"],
+    examples: ["`hug @Vert3xo` : hugs the person with the tag @Vert3xo"],
 
     async execute(message, args, client) {
         if (
