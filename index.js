@@ -6,19 +6,6 @@ client.config = require('./config.json');
 const auth = require('./auth.json');
 const NodeCache = require('node-cache');
 client.cache = new NodeCache({stdTTL: client.config.cache_time});
-const express = require('express');
-const http = require('http');
-
-const app = express();
-
-app.get("/", (request, response) => {
-    console.log('HTTP Ping Recieved')
-    response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://puffles.glitch.me/`);
-}, 180000);
 
 // Load events
 fs.readdirSync('./events').forEach(file => {
